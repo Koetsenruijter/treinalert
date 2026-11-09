@@ -1,0 +1,28 @@
+name: treinalert
+on:
+  schedule:
+    - cron: "*/5 4-21 * * 1-5"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install requests
+      - run: python check_delays.py
+        env:
+          NS_API_KEY: ${{ secrets.NS_API_KEY }}
+          NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}
+      - name: Bewaar welke meldingen al verstuurd zijn
+        run: |
+          git config user.name "treinalert"
+          git config user.email "treinalert@users.noreply.github.com"
+          git add seen.json || true
+          git diff --cached --quiet || (git commit -m "update state" && git push)
