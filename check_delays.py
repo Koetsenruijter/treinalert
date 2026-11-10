@@ -14,7 +14,7 @@ NTFY_TOPIC = os.environ["NTFY_TOPIC"]
 URL = "https://gateway.apiportal.ns.nl/reisinformatie-api/api/v2/departures"
 # (stationscode, naam, bestemming die op de route moet liggen)
 ROUTES = [("ZL", "Zwolle", "Hoogeveen"), ("HGV", "Hoogeveen", "Zwolle")]
-MIN_DELAY_MIN = 30
+MIN_DELAY_MIN = 10
 ALERT_ON_CANCEL = True  # ook een bericht bij uitval
 STATE_FILE = Path(__file__).parent / "seen.json"
 TIME_FMT = "%Y-%m-%dT%H:%M:%S%z"
